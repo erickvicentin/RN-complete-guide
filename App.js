@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { 
-        StyleSheet,
-        View, 
-        Button, 
-        FlatList 
-        } from 'react-native';
-        
+import {
+  StyleSheet,
+  View,
+  Button,
+  FlatList
+} from 'react-native';
+
 import GoalItem from './components/GoalItems';
 import GoalInput from './components/GoalInput';
 
@@ -24,31 +24,39 @@ export default function App() {
   const removeGoalHandler = goalId => {
     setCourseGoals(currentGoals => {
       return currentGoals.filter((goal) => goal.id !== goalId);
-    });  
-};
+    });
+  };
 
-  
+  const cancelGoalAdditionHandler = () => {
+    setIsAddMode(false);
+  };
+
+
 
   return (
     <View style={style.screen}>
-    <Button title = "Añadir nueva meta" onPress={() => setIsAddMode(true)} />
-      <GoalInput visible={isAddMode} onAddGoal={addGoalHandler} />
-        <FlatList
-          keyExtractor= {(item,index) => item.id}
-          data={courseGoals}
-          renderItem={itemData => 
-          <GoalItem 
-            id={itemData.item.id} 
-            onDelete={removeGoalHandler} 
-            title={itemData.item.value} /> 
-          }
-        />
+      <Button title="Añadir nueva meta" onPress={() => setIsAddMode(true)} />
+      <GoalInput
+        visible={isAddMode} 
+        onAddGoal={addGoalHandler} 
+        onCancel={cancelGoalAdditionHandler} 
+      />
+      <FlatList
+        keyExtractor={(item, index) => item.id}
+        data={courseGoals}
+        renderItem={itemData =>
+          <GoalItem
+            id={itemData.item.id}
+            onDelete={removeGoalHandler}
+            title={itemData.item.value} />
+        }
+      />
     </View>
   );
 }
 
-style = StyleSheet.create ({
+style = StyleSheet.create({
   screen: {
-    padding:50
+    padding: 50
   }
 })
